@@ -2,6 +2,7 @@ try:
     import pika
     import ast
     import time
+    from PIL import Image as image
     from datetime import datetime
 
 except Exception as e:
@@ -48,6 +49,7 @@ class rabbitmqServer():
 
         Payload = body.decode("utf-8")
         Payload = ast.literal_eval(Payload)
+        
         # datetime object containing current date and time
         now = datetime.now()
 
@@ -59,6 +61,8 @@ class rabbitmqServer():
         with open(file_name, "wb") as f:
             f.write(Payload)
 
+        
+
         print(type(Payload))
         print("Data Received")
 
@@ -67,9 +71,9 @@ class rabbitmqServer():
 
         Payload = body.decode("utf-8")
         Payload = ast.literal_eval(Payload)
+        image
         # datetime object containing current date and time
         now = datetime.now()
-
         # dd/mm/YY H:M:S
         path = "I:/daihoc/nam4/ky_II/ThayHa_LapTrinhWebVaUngDung/thuchanh/xampp/htdocs/imagegallery/images/app2/"
         dt_string = now.strftime("app2_%d%m%Y%H%M%S.png")
@@ -77,6 +81,10 @@ class rabbitmqServer():
 
         with open(file_name, "wb") as f:
             f.write(Payload)
+
+        color_img = image.open(file_name)
+        bi_img = color_img.convert("1")
+        bi_img.save(file_name)
 
         print(type(Payload))
         print("Data Received")
@@ -99,4 +107,4 @@ if __name__ == "__main__":
     serverconfigure = RabbitMqServerConfigure(host='localhost')
 
     server = rabbitmqServer(server=serverconfigure)
-    server.startserver(rabbitmqServer.callback_app1)
+    server.startserver(rabbitmqServer.callback_app2)
