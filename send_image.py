@@ -84,8 +84,8 @@ class Image(object):
 if __name__ == "__main__":
 
     server = RabbitmqConfigure()
-
-    image = Image(filename="I:/in.jpg")
+    filename = ""+sys.argv[1]
+    image = Image(filename=filename)
     data = image.get
 
     with RabbitMq(server) as rabbitmq:
